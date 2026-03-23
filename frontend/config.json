@@ -1,0 +1,41 @@
+{
+  "site": {
+    "url": "https://gyoza.lxchapu.com",
+    "title": "你能做我的猫吗",
+    "description": "这是一个使用 Astro 和 React 开发的博客主题。",
+    "keywords": "Gyoza,blog,Astro,theme,lxchapu,博客主题",
+    "lang": "zh-CN",
+    "slug": "当第一颗卫星飞向大气层外，我们便以为自己终有一日会征服宇宙。"
+  },
+  "author": {
+    "name": "Shawfix",
+    "avatar": "https://avatars.githubusercontent.com/u/75828211?v=4"
+  },
+  "menus": [
+    {
+      "name": "首页",
+      "link": "/",
+      "icon": "icon-pantone"
+    },
+    {
+      "name": "归档",
+      "link": "/archives",
+      "icon": "icon-archive"
+    },
+    {
+      "name": "项目",
+      "link": "/projects",
+      "icon": "icon-flask"
+    },
+    {
+      "name": "关于",
+      "link": "/about",
+      "icon": "icon-ghost"
+    },
+    {
+      "name": "友链",
+      "link": "/friends",
+      "icon": "icon-hearts"
+    }
+  ]
+}
