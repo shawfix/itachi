@@ -1,15 +1,15 @@
-import type { HTMLMotionProps } from "motion/react";
-import { motion } from "motion/react";
+import type { HTMLMotionProps } from 'framer-motion';
+import { m } from 'framer-motion';
 
-export const MotionButton = ({
+export const MotionButtonBase = ({
   ref,
   children,
   ...rest
-}: HTMLMotionProps<"button"> & {
+}: HTMLMotionProps<'button'> & {
   ref?: React.RefObject<HTMLButtonElement | null>;
 }) => {
   return (
-    <motion.button
+    <m.button
       initial={true}
       whileFocus={{ scale: 1.02 }}
       whileHover={{ scale: 1.02 }}
@@ -18,6 +18,8 @@ export const MotionButton = ({
       ref={ref}
     >
       {children}
-    </motion.button>
+    </m.button>
   );
 };
+
+MotionButtonBase.displayName = 'MotionButtonBase';
