@@ -10,6 +10,7 @@ import { AccentColorStyleInjector } from '@/components/modules/shared/AccentColo
 import { sansFont, serifFont } from '@/lib/fonts';
 import PKG from '@/package.json';
 import { WebAppProviders } from '@/providers/root';
+import { AggregationProvider } from '@/providers/root/aggregation-data-provider';
 
 const { version } = PKG;
 
@@ -20,6 +21,27 @@ export const metadata: Metadata = {
 
 export default async function RootLayout(props: PropsWithChildren) {
   const { children } = props;
+
+  const data = {
+    user: {
+      id: '',
+      introduce: '当第一颗卫星飞向大气层外，我们便以为自己终有一日会征服宇宙。',
+      mail: 'shawliu996@gmail.com',
+      name: 'Shawfix',
+      username: 'Shawfix',
+      avatar: 'https://avatars.githubusercontent.com/u/75828211?v=4',
+      lastLoginAt: '',
+      lastLoginIp: '',
+      createdAt: '',
+      modifiedAt: ''
+    },
+    seo: {
+      title: '你能做我的猫吗的个人博客',
+      description: 'Clean, Cute, Fast.',
+      icon: '/favicon.ico',
+      keywords: ['Gyoza', 'blog', 'Astro', 'theme', 'lxchapu', '博客主题']
+    }
+  };
 
   return (
     <html lang="zh-CN" className="noise themed" suppressHydrationWarning>
@@ -32,9 +54,11 @@ export default async function RootLayout(props: PropsWithChildren) {
         className={`${sansFont.variable} ${serifFont.variable} m-0 h-full p-0 font-sans`}
       >
         <WebAppProviders>
-          <div data-theme>
-            <Root>{children}</Root>
-          </div>
+          <AggregationProvider aggregationData={data}>
+            <div data-theme>
+              <Root>{children}</Root>
+            </div>
+          </AggregationProvider>
         </WebAppProviders>
       </body>
     </html>

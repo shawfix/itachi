@@ -39,6 +39,11 @@ const AnimatedMenu: FC<PropsWithChildren> = ({ children }) => {
         opacity: hasMetaInfo ? opacity : 1,
         visibility: opacity === 0 && hasMetaInfo ? 'hidden' : 'visible'
       }}
+      initial={{
+        y: 10,
+        opacity: 0
+      }}
+      animate={{ y: 0, opacity: 1 }}
     >
       {children}
     </m.div>
@@ -77,7 +82,7 @@ const ForDesktop: FC = () => {
       className={clsxm(
         'relative',
         'rounded-full bg-gradient-to-b from-zinc-50/70 to-white/90',
-        'shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-md',
+        'shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5',
         'dark:from-zinc-900/70 dark:to-zinc-800/90 dark:ring-zinc-100/10',
         'group [--spotlight-color:oklch(var(--a)_/_0.12)]',
         'pointer-events-auto duration-200',
