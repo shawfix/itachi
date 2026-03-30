@@ -4,6 +4,8 @@ import chroma from 'chroma-js';
 import { useIsomorphicLayoutEffect } from 'framer-motion';
 import { usePathname, useSearchParams } from 'next/navigation';
 
+import { createPngNoiseBackground } from '@/lib/noise';
+
 const themeColor = {
   accent: [
     { light: '#F55555', dark: '#FCCF31' },
@@ -39,13 +41,18 @@ function getRgbVal(color: chroma.Color) {
   return color.rgb().join(' ');
 }
 
-function getAccentColorStyleText() {
+async function getAccentColorStyleText() {
   const accentColor = pickRandomAccent();
 
   const rootBgColor = {
     light: chroma.mix('rgb(250,250,250)', accentColor.light, 0.05, 'rgb'),
     dark: chroma.mix('rgb(0,2,18)', accentColor.dark, 0.12, 'rgb')
   };
+
+  const [lightBgImage, darkBgImage] = await Promise.all([
+    createPngNoiseBackground(accentColor.light),
+    createPngNoiseBackground(accentColor.dark)
+  ]);
 
   return `html {
     --color-accent: ${getRgbVal(chroma(accentColor.light))};
@@ -64,13 +71,28 @@ function getAccentColorStyleText() {
     --color-text-primary: ${getRgbVal(chroma(themeColor.text.primary.dark))};
     --color-text-secondary: ${getRgbVal(chroma(themeColor.text.secondary.dark))};
     --color-border-primary: ${getRgbVal(chroma(themeColor.border.primary.dark))};
-  }`;
+  }
+  
+  html[data-theme='light'].noise body::before {
+    background-image: ${lightBgImage}
+  }
+  html[data-theme='dark'].noise body::before {
+    background-image: ${darkBgImage}
+  }
+  `;
 }
 
-function injectColor() {
-  const $style = document.createElement('style');
-  $style.textContent = getAccentColorStyleText();
-  document.head.append($style);
+async function injectColor() {
+  let $style = document.head.querySelector('#accent-color-style');
+
+  if (!$style) {
+    $style = document.createElement('style');
+    $style.id = 'accent-color-style';
+
+    document.head.append($style);
+  }
+
+  $style.textContent = await getAccentColorStyleText();
 }
 
 export function AccentColorStyleInjector() {

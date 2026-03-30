@@ -1,14 +1,15 @@
 import type { PropsWithChildren } from 'react';
 
+import { Content } from '../content/Content';
+import { Footer } from '../footer/Footer';
 import { Header } from '../header/Header';
 
 export function Root({ children }: PropsWithChildren) {
   return (
     <>
       <Header />
-      {children}
-      {/* <Content>{children}</Content>
-      <Footer /> */}
+      <Content>{children}</Content>
+      <Footer />
     </>
   );
 }

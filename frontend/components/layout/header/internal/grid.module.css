@@ -11,3 +11,7 @@
     grid-area: left;
   }
 }
+
+.header--grid__theme--switcher {
+  grid-area: right;
+}

@@ -39,11 +39,6 @@ const AnimatedMenu: FC<PropsWithChildren> = ({ children }) => {
         opacity: hasMetaInfo ? opacity : 1,
         visibility: opacity === 0 && hasMetaInfo ? 'hidden' : 'visible'
       }}
-      initial={{
-        y: 10,
-        opacity: 0
-      }}
-      animate={{ y: 0, opacity: 1 }}
     >
       {children}
     </m.div>

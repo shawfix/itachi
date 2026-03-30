@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-:root,
-[data-theme],
+/* :root, */
 html {
   font-size: 14px;
   line-height: 1.5;
-  color: theme('textColor.primary');
-  background-color: theme('backgroundColor.root');
+  /* color: theme('textColor.primary');
+  background-color: theme('backgroundColor.root'); */
   scroll-padding-top: 64px;
 }
 
@@ -56,7 +55,6 @@ html.noise body::before {
   content: '';
   opacity: 0.04;
   background-repeat: repeat;
-  filter: blur(3px);
 }
 
 @media print {
