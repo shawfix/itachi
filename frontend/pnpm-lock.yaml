@@ -57,6 +57,9 @@ importers:
         specifier: 3.5.0
         version: 3.5.0
     devDependencies:
+      '@iconify-json/mingcute':
+        specifier: 1.2.7
+        version: 1.2.7
       '@iconify/tailwind':
         specifier: 1.2.0
         version: 1.2.0
@@ -655,6 +658,9 @@ packages:
     engines: {node: '>=18.12.0'}
     peerDependencies:
       tailwindcss: ^3.4.0 || ^4.0.0
+
+  '@iconify-json/mingcute@1.2.7':
+    resolution: {integrity: sha512-bp4z6F53KAQp99aSL7qPCHL7HWUNGMNKIhfo/dx9pwVHiad/WusUbTOFXEZfpA44syJPzSOxa3O6Pwiq7qZz1g==}
 
   '@iconify/tailwind@1.2.0':
     resolution: {integrity: sha512-KgpIHWOTcRYw1XcoUqyNSrmYyfLLqZYu3AmP8zdfLk0F5TqRO8YerhlvlQmGfn7rJXgPeZN569xPAJnJ53zZxA==}
@@ -3545,6 +3551,10 @@ snapshots:
       synckit: 0.11.12
       tailwind-api-utils: 1.0.3(tailwindcss@3.4.17)
       tailwindcss: 3.4.17
+
+  '@iconify-json/mingcute@1.2.7':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify/tailwind@1.2.0':
     dependencies:

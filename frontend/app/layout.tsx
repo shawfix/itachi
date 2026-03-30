@@ -43,6 +43,53 @@ export default async function RootLayout(props: PropsWithChildren) {
     }
   };
 
+  const config = {
+    hero: {
+      title: {
+        template: [
+          {
+            type: 'h1',
+            text: "Hi, I'm",
+            class: 'font-light text-4xl leading-10'
+          },
+          {
+            type: 'h1',
+            text: 'Shawfix',
+            class: 'font-medium mx-2 text-4xl leading-10'
+          },
+          {
+            type: 'h1',
+            text: '👋。',
+            class: 'font-light text-4xl leading-10'
+          },
+          {
+            type: 'br'
+          },
+          {
+            type: 'h1',
+            text: 'A ',
+            class: 'font-light text-4xl leading-10'
+          },
+          {
+            type: 'code',
+            text: '</> Developer & #Musician',
+            class:
+              'font-medium mx-2 text-3xl rounded p-1 bg-gray-200 dark:bg-gray-800/0 hover:dark:bg-gray-800/100 bg-opacity-0 hover:bg-opacity-100 transition-background duration-200 leading-10'
+          },
+          {
+            type: 'span',
+            class:
+              'inline-block w-[1px] h-8 -bottom-2 relative bg-gray-800/80 dark:bg-gray-200/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 group-hover:animation-blink leading-10'
+          }
+        ]
+      },
+      description: 'Working in Mog and Jwc.js for a magical web world.'
+    },
+    site: {
+      favicon: '/favicon.ico'
+    }
+  };
+
   return (
     <html lang="zh-CN" className="noise themed" suppressHydrationWarning>
       <head>
@@ -54,7 +101,7 @@ export default async function RootLayout(props: PropsWithChildren) {
         className={`${sansFont.variable} ${serifFont.variable} m-0 h-full p-0 font-sans`}
       >
         <WebAppProviders>
-          <AggregationProvider aggregationData={data}>
+          <AggregationProvider appConfig={config} aggregationData={data}>
             <div data-theme>
               <Root>{children}</Root>
             </div>

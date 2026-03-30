@@ -1,69 +1,160 @@
-import Image from "next/image";
+'use client';
+
+import clsx from 'clsx';
+import { m } from 'framer-motion';
+import Image from 'next/image';
+import type { FC } from 'react';
+import { createElement } from 'react';
+
+import { BottomToUpTransitionView } from '@/components/ui/transition/BottomToUpTransitionView';
+import { TextUpTransitionView } from '@/components/ui/transition/TextUpTransitionView';
+import { softBouncePreset } from '@/constants/spring';
+import { clsxm } from '@/lib/helper';
+import {
+  useAggregationSelector,
+  useAppConfigSelector
+} from '@/providers/root/aggregation-data-provider';
 
 export default function Home() {
   return (
-    <div
-      className="flex flex-1 flex-col items-center justify-center bg-zinc-50 font-sans dark:bg-black"
-      style={{ height: "200vh" }}
-    >
-      <span className="text-amber-300">哈哈哈</span>
-      <main className="flex w-full max-w-3xl flex-1 flex-col items-center justify-between bg-white px-16 py-32 sm:items-start dark:bg-black">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="bg-foreground text-background flex h-12 w-full items-center justify-center gap-2 rounded-full px-5 transition-colors hover:bg-[#383838] md:w-[158px] dark:hover:bg-[#ccc]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div>
+      <Hero />
     </div>
   );
 }
+
+const TwoColumnLayout: FC<{
+  children:
+    | [React.ReactNode, React.ReactNode]
+    | [React.ReactNode, React.ReactNode, React.ReactNode];
+  leftContainerClassName?: string;
+  rightContainerClassName?: string;
+  className?: string;
+}> = ({
+  children,
+  leftContainerClassName,
+  rightContainerClassName,
+  className
+}) => {
+  return (
+    <div
+      className={clsxm(
+        'relative block size-full min-w-0 max-w-[1800px] flex-col flex-wrap items-center lg:flex lg:flex-row',
+        className
+      )}
+    >
+      {children.slice(0, 2).map((child, i) => {
+        return (
+          <div
+            key={i}
+            className={clsxm(
+              'flex w-full flex-col center lg:h-auto lg:w-1/2',
+              i === 0 ? leftContainerClassName : rightContainerClassName
+            )}
+          >
+            <div className="relative max-w-full lg:max-w-2xl">{child}</div>
+          </div>
+        );
+      })}
+
+      {children[2]}
+    </div>
+  );
+};
+
+const Hero: FC = () => {
+  const hero = useAppConfigSelector(config => {
+    return {
+      ...config.hero
+    };
+  });
+
+  const { title, description } = hero || {};
+  const titleAnimateD = title
+    ? title.template.reduce((acc, cur) => {
+        return acc + (cur.text?.length || 0);
+      }, 0) * 50
+    : 0;
+
+  const siteOwner = useAggregationSelector(agg => {
+    return agg.user;
+  });
+  const { avatar } = siteOwner || {};
+
+  return (
+    <div className="mt-20 min-w-0 max-w-screen overflow-hidden lg:mt-[-4.5rem] lg:h-dvh lg:min-h-[800px]">
+      <TwoColumnLayout leftContainerClassName="mt-[120px] lg:mt-0 h-[15rem] lg:h-1/2">
+        <>
+          <m.div
+            className="group relative text-center leading-[4] lg:text-left [&_*]:inline-block"
+            initial={{ opacity: 0.0001, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={softBouncePreset}
+          >
+            {title?.template.map((t, i) => {
+              const { type } = t;
+              const prevAllTextLength = title.template
+                .slice(0, i)
+                .reduce((acc, cur) => {
+                  return acc + (cur?.text?.length || 0);
+                }, 0);
+
+              return createElement(
+                type,
+                { key: i, className: t.class },
+                t.text && (
+                  <TextUpTransitionView
+                    initialDelay={prevAllTextLength * 0.05}
+                    eachDelay={0.05}
+                  >
+                    {t.text}
+                  </TextUpTransitionView>
+                )
+              );
+            })}
+          </m.div>
+
+          <BottomToUpTransitionView
+            delay={titleAnimateD + 500}
+            transition={softBouncePreset}
+            className="my-3 text-center lg:text-left"
+          >
+            <span className="opacity-80">{description}</span>
+          </BottomToUpTransitionView>
+        </>
+        <div
+          className={clsx('lg:size-[300px]', 'size-[200px]', 'mt-24 lg:mt-0')}
+        >
+          <Image
+            height={300}
+            width={300}
+            src={avatar!}
+            alt="Site Owner Avatar"
+            className={clsxm(
+              'aspect-square rounded-full border border-slate-200 dark:border-neutral-800',
+              'w-full'
+            )}
+          />
+        </div>
+
+        <m.div
+          initial={{ opacity: 0.0001, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={softBouncePreset}
+          className={clsx(
+            'inset-x-0 bottom-0 mt-12 flex flex-col center lg:absolute lg:mt-0',
+
+            'text-neutral-800/80 center dark:text-neutral-200/80'
+          )}
+        >
+          <small>
+            当第一颗卫星飞向大气层外，我们便以为自己终有一日会征服宇宙。
+          </small>
+          <span className="mt-8 animate-bounce">
+            <i className="icon-[mingcute--right-line] rotate-90 text-2xl" />
+          </span>
+        </m.div>
+      </TwoColumnLayout>
+    </div>
+  );
+};
