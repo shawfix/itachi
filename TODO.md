@@ -6,9 +6,11 @@
     "chroma-js": "3.1.2",
     "daisyui": "4.10.2",
     "jojoo": "0.1.4",
-    "jotai": "2.8.0"
+    "jotai": "2.8.0",
+    "next-themes": "0.4.6"
   },
   "devDependency": {
+    "@iconify-json/mingcute": "1.2.7",
     "@iconify/tailwind": "1.2.0",
     "@tailwindcss/container-queries": "0.1.1",
     "@tailwindcss/typography": "0.5.19",
@@ -37,7 +39,8 @@
     "daisyui": "4.10.2",
     "jojoo": "0.1.4",
     "jotai": "2.8.0",
-    "js-cookie": "3.0.5"
+    "js-cookie": "3.0.5",
+    "next-themes": "0.4.6"
   }
 }
 ```
