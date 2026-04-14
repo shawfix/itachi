@@ -33,7 +33,11 @@ export default async function RootLayout(props: PropsWithChildren) {
       lastLoginAt: '',
       lastLoginIp: '',
       createdAt: '',
-      modifiedAt: ''
+      creatorId: 'admin',
+      creatorName: 'admin',
+      modifiedAt: '',
+      modifierId: 'admin',
+      modifierName: 'admin'
     },
     seo: {
       title: '你能做我的猫吗的个人博客',

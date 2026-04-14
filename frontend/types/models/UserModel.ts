@@ -1,4 +1,4 @@
-import type { BaseModel } from './_BaseModel';
+import type { BaseModel } from './BaseModel';
 
 export interface UserModel extends BaseModel {
   introduce: string;

@@ -10,6 +10,7 @@ import { DebugProvider } from './debug-provider';
 import { EventProvider } from './event-provider';
 import { JotaiStoreProvider } from './jotai-provider';
 import { PageScrollInfoProvider } from './page-scroll-info-provider';
+import { ReactQueryProvider } from './react-query-provider';
 
 const loadFeatures = () =>
   import('./framer-lazy-feature').then(res => res.default);
@@ -22,7 +23,9 @@ const baseContexts: JSX.Element[] = [
   <LazyMotion features={loadFeatures} strict key="framer" />
 ];
 
-const webappContexts: JSX.Element[] = baseContexts;
+const webappContexts: JSX.Element[] = baseContexts.concat(
+  <ReactQueryProvider key="reactQueryProvider" />
+);
 
 export function WebAppProviders({ children }: PropsWithChildren) {
   return (
